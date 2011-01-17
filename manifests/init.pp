@@ -1,3 +1,18 @@
+# Definition: software
+#
+# This module manages software
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires: none
+#
+# Sample Usage:
+#   software { "apg": }
+#   software { "apg": ensure => 'absent' }
+#
+# [Remember: No empty lines between comments and class definition]
 define software(
     $package   = "",
     $ensure    = "",

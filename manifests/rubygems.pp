@@ -1,0 +1,2 @@
+class software::rubygems {
+}
