@@ -20,22 +20,25 @@ define software(
     $source    = "",
     $type      = "",
 ) {
+    # Set defaults to use if not provide by the caller or the
+    # specific package manifest.
     $default_ensure   = "present"
-    $default_provider = $operatingsystem ? {
-                            Solaris => "pkg",
-                            default => "",
-                        }
+    $default_provider = ""
     $default_package  = $name
     $default_source   = ""
     $default_type     = "package"
     
-    # Load software defaults from the appropriate manifest.
-    include "software::$name"
-    $software_ensure      = inline_template("<%= scope.lookupvar(\"software::${name}::ensure\"  ) %>")
-    $software_provider    = inline_template("<%= scope.lookupvar(\"software::${name}::provider\") %>")
-    $software_package     = inline_template("<%= scope.lookupvar(\"software::${name}::package\" ) %>")
-    $software_source      = inline_template("<%= scope.lookupvar(\"software::${name}::source\"  ) %>")
-    $software_type        = inline_template("<%= scope.lookupvar(\"software::${name}::type\"    ) %>")
+    # Load software defaults from the appropriate manifest if it
+    # exists.  Otherwise we will behave just like the Package
+    # resource minus some less used features.
+    if( defined( Class["software::$name"] ) ) {
+        include "software::$name"
+        $software_ensure      = inline_template("<%= scope.lookupvar(\"software::${name}::ensure\"  ) %>")
+        $software_provider    = inline_template("<%= scope.lookupvar(\"software::${name}::provider\") %>")
+        $software_package     = inline_template("<%= scope.lookupvar(\"software::${name}::package\" ) %>")
+        $software_source      = inline_template("<%= scope.lookupvar(\"software::${name}::source\"  ) %>")
+        $software_type        = inline_template("<%= scope.lookupvar(\"software::${name}::type\"    ) %>")
+    }
     
     if( $package != "" ) {
         $real_package = $package
