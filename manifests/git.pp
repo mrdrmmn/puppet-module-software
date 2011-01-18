@@ -12,19 +12,27 @@
 #   
 # [Remember: No empty lines between comments and class definition]
 class software::git {
-    case $operatingsystem {
-        Solaris: {
-            case $operatingsystemrelease {
-                5.11: {
-                    $package  = "developer/versioning/git"
-                }
-                default: {
-                    $package  = "SUNWgit"
+    case $kernel {
+        SunOS: {
+            case $operatingsystem {
+                Solaris: {
+                    case $operatingsystemrelease {
+                        5.11: {
+                            $package  = "developer/versioning/git"
+                        }
+                        default: {
+                            $package  = "SUNWgit"
+                        }
+                    }
                 }
             }
         }
-        Ubuntu: {
-            $package  = "git-core"
+        Linux: {
+            $type = "virtual"
+            software{ [ "git-core", "git-daemon" ]:
+                ensure   => $ensure,
+                provider => $provider;
+            }
         }
     }
 }
