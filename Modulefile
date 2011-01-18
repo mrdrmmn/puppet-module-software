@@ -1,5 +1,5 @@
 name    'therevmj-software'
-version '0.0.1'
+version '0.0.2'
 source 'git://github.com/therevmj/puppet-module-software.git'
 author 'therevmj'
 license 'UNKNOWN'
