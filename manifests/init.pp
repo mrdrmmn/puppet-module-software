@@ -34,12 +34,21 @@ define software(
     # documentation on checking if a class is defined seemse to be
     # wrong so the 'defined' statement throws an error.  :(
     if( defined("software::$name") ) {
+        notice("class software::$name found")
         include "software::$name"
-        $software_ensure      = inline_template("<%= scope.lookupvar(\"software::${name}::ensure\"  ) %>")
-        $software_provider    = inline_template("<%= scope.lookupvar(\"software::${name}::provider\") %>")
-        $software_package     = inline_template("<%= scope.lookupvar(\"software::${name}::package\" ) %>")
-        $software_source      = inline_template("<%= scope.lookupvar(\"software::${name}::source\"  ) %>")
-        $software_type        = inline_template("<%= scope.lookupvar(\"software::${name}::type\"    ) %>")
+        $software_ensure   = inline_template("<%= scope.lookupvar(\"software::${name}::ensure\"  ) %>")
+        $software_provider = inline_template("<%= scope.lookupvar(\"software::${name}::provider\") %>")
+        $software_package  = inline_template("<%= scope.lookupvar(\"software::${name}::package\" ) %>")
+        $software_source   = inline_template("<%= scope.lookupvar(\"software::${name}::source\"  ) %>")
+        $software_type     = inline_template("<%= scope.lookupvar(\"software::${name}::type\"    ) %>")
+    }
+    else {
+        warning("class software::$name does not exist. attempting to continue.")
+        $software_ensure   = ""
+        $software_provider = ""
+        $software_package  = ""
+        $software_source   = ""
+        $software_type     = ""
     }
     
     if( $package != "" ) {
@@ -102,7 +111,7 @@ define software(
         }
     }
 
-    if( $type == "package" ) {
+    if( $real_type == "package" ) {
         case $provider {
             "sunfreeware": {
                 software { "pkg-get": ensure => "present"; }
@@ -130,3 +139,4 @@ define software(
         realize Package[$real_package]
     }
 }
+
