@@ -1,3 +1,7 @@
+# DISCLAIMER: I don't recall where I obtained this file, but I did not write it.
+# If you have any information on the original author / license, please let me
+# know and I will be happy to add the appropriate comments.  Thanks!
+
 require 'puppet/provider/package'
 
 Puppet::Type.type(:package).provide :pkg, :parent => Puppet::Provider::Package do

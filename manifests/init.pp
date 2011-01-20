@@ -33,7 +33,7 @@ define software(
     # resource minus some less used features.  Unfortunately, the
     # documentation on checking if a class is defined seemse to be
     # wrong so the 'defined' statement throws an error.  :(
-    if( defined(Class["software::$name"]) ) {
+    if( defined("software::$name") ) {
         include "software::$name"
         $software_ensure      = inline_template("<%= scope.lookupvar(\"software::${name}::ensure\"  ) %>")
         $software_provider    = inline_template("<%= scope.lookupvar(\"software::${name}::provider\") %>")
