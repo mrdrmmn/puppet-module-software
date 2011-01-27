@@ -1,7 +1,14 @@
 class software::unrar {
     case $operatingsystem {
         Solaris: {
-            $package  = "archiver/unrar"
+            case $operatingsystemrelease {
+                5.11: {
+                    $package  = "archiver/unrar"
+                }
+                default: {
+                    $package  = "SUNWunrar"
+                }
+            }
         }
     }
 }

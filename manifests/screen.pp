@@ -1,7 +1,14 @@
 class software::screen {
     case $operatingsystem {
         Solaris: {
-            $package  = "terminal/screen"
+            case $operatingsystemrelease {
+                5.11: {
+                    $package  = "terminal/screen"
+                }
+                default: {
+                    $package  = "SUNWscreen"
+                }
+            }
         }
     }
 }

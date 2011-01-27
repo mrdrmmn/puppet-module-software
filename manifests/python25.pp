@@ -1,7 +1,14 @@
 class software::python25 {
     case $operatingsystem {
         Solaris: {
-            $package  = "runtime/python-25"
+             case $operatingsystemrelease {
+                 5.11: {
+                     $package  = "runtime/python-25"
+                 }
+                 default: {
+                     $package  = "SUNWPython25"
+                 }
+             }
         }
     }
 }
