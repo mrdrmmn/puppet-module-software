@@ -1,4 +1,4 @@
-class software::apg {
+class software::isaexec {
     case $operatingsystem {
         Solaris: {
             $provider = "blastwave"

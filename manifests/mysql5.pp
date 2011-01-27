@@ -1,7 +1,7 @@
 class software::mysql5 {
     case $operatingsystem {
         Solaris: {
-            $package  = "SUNWmysql5"
+            $package  = "database/mysql-51"
         }
     }
 }
