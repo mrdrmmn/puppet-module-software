@@ -118,13 +118,15 @@ define software(
     if( $real_type == "package" ) {
         case $real_provider {
             /(sunfreeware|blastwave)/: {
-                software { "pkg-get": ensure => "present"; }
-                file { "/usr/bin/pkg-get":
-                    ensure  => "/opt/csw/bin/pkg-get",
-                    require => Software["pkg-get"],
+                if( ! defined( Software["pkg-get"] ) ) {
+                    software { "pkg-get": ensure => "present"; }
+                    file { "/usr/bin/pkg-get":
+                        ensure  => "/opt/csw/bin/pkg-get",
+                        require => Software["pkg-get"],
+                    }
                 }
-                Software[$name] { require +> Software["pkg-get"] }
-                realize Software[$name]
+                #Software[$name] { require +> Software["pkg-get"] }
+                #realize Software[$name]
             }
         }
 
